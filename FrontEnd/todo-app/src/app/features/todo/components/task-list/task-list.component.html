@@ -1,0 +1,60 @@
+<!-- src/app/features/todo/components/task-list/task-list.component.html -->
+
+<mat-toolbar color="primary">
+    <span>Task List</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="onAdd()">
+        <mat-icon>add</mat-icon> Add Task
+    </button>
+</mat-toolbar>
+
+<div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+            <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+        </ng-container>
+
+        <!-- Completed Column -->
+        <ng-container matColumnDef="completed">
+            <th mat-header-cell *matHeaderCellDef>Completed</th>
+            <td mat-cell *matCellDef="let task">
+                <mat-checkbox [checked]="task.completed" disabled></mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- LockedBy Column -->
+        <ng-container matColumnDef="lockedBy">
+            <th mat-header-cell *matHeaderCellDef>נעול ע״י</th>
+            <td mat-cell *matCellDef="let task">{{ task.lockedBy || '-' }}</td>
+        </ng-container>
+
+        <!-- CreatedAt Column -->
+        <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>נוצר בתאריך</th>
+            <td mat-cell *matCellDef="let task">{{ task.createdAt | date:'short' }}</td>
+        </ng-container>
+
+        <!-- UpdatedAt Column -->
+        <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>עודכן בתאריך</th>
+            <td mat-cell *matCellDef="let task">{{ task.updatedAt | date:'short' }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let task">
+                <button mat-button (click)="onEdit(task)">Edit</button>
+                <button mat-button (click)="onDelete(task.id)">Delete</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

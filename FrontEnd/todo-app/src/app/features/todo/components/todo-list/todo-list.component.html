@@ -1,0 +1,6 @@
+<ul>
+    <li *ngFor="let t of tasks">
+        <input type="checkbox" [checked]="t.completed">
+        {{ t.title }}
+    </li>
+</ul>
